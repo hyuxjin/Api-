@@ -1,0 +1,136 @@
+1️⃣ User Registration & Authentication
+✅ Register a New User
+Method: POST
+URL: http://127.0.0.1:8000/posts/users/
+
+Body (JSON):
+
+{
+    "username": "testuser",
+    "email": "test@example.com",
+    "password": "password123"
+}
+Expected Response:
+
+A new user is created.
+The response should return a user object and an authentication token.
+
+
+✅ Get Token for Existing User
+Method: POST
+URL: http://127.0.0.1:8000/posts/api/token/
+
+Body (JSON):
+{
+    "username": "testuser",
+    "password": "password123"
+}
+
+Expected Response:
+You should receive an authentication token.
+Copy the token for further API requests.
+
+
+✅ Get All Users (Requires Authentication)
+Method: GET
+URL: http://127.0.0.1:8000/users/
+
+Headers:
+Authorization: Token YOUR_AUTH_TOKEN
+
+Expected Response:
+A list of all registered users.
+
+
+2️⃣ Google Login Authentication
+✅ Google Login Redirect
+Method: GET
+URL: http://127.0.0.1:8000/posts/api/v1/auth/google/
+Expected Behavior: 200 OK
+
+For further testing, use browser to make sure it login successfully as you need to login your google account
+
+✅ Google Login Callback
+Method: GET
+URL:http://127.0.0.1:8000/accounts/google/login/callback/?code=YOUR_AUTH_CODE (auth code can be seen at http://127.0.0.1:8000/posts/api/v1/auth/google/)
+OR (Postman Test Using POST)
+Method: POST
+URL: http://127.0.0.1:8000/accounts/google/login/callback/
+Body (JSON):
+{
+    "code": "YOUR_AUTH_CODE"
+}
+Expected Response: 200 OK
+
+3️⃣ Post Management
+✅ Create a Post (Requires Authentication)
+
+Method: POST
+URL: http://127.0.0.1:8000/posts/posts/
+
+Headers:
+Authorization: Token YOUR_AUTH_TOKEN
+
+Body (JSON):
+{
+    "title": "My First Post",
+    "content": "Hello, this is a test post!"
+}
+Expected Response:
+A new post is created.
+The response contains post details.
+
+✅ Get All Posts
+Method: GET
+
+URL: http://127.0.0.1:8000/posts/posts/
+
+Expected Response:
+List of posts sorted by created_at.
+
+✅ Like a Post
+Method: POST
+
+URL: http://127.0.0.1:8000/posts/posts/1/like/
+
+Headers:
+Authorization: Token YOUR_AUTH_TOKEN
+
+Expected Response:
+If post is already liked: {"message": "Like removed."}
+If post is not liked: {"message": "Post liked."}
+
+4️⃣ Comments
+✅ Create a Comment
+Method: POST
+URL: http://127.0.0.1:8000/posts/comments/
+Headers:
+Authorization: Token YOUR_AUTH_TOKEN
+
+Body (JSON):
+{
+    "post": 1,
+    "content": "Great post!"
+}
+Expected Response:
+A new comment is created.
+
+✅ Get All Comments
+
+Method: GET
+URL: http://127.0.0.1:8000/posts/comments/
+
+5️⃣ News Feed
+✅ Fetch Latest Posts
+
+Method: GET
+URL: http://127.0.0.1:8000/posts/newsfeed/
+Headers:
+Authorization: Token YOUR_AUTH_TOKEN
+Expected Response:
+Latest 10 posts.
+
+6️⃣ Logout
+✅ Logout
+Method: GET
+URL: http://127.0.0.1:8000/posts/logout
