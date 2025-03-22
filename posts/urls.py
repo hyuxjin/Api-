@@ -22,9 +22,16 @@ urlpatterns = [
     path('comments/<int:pk>/', CommentDetail.as_view(), name='comment-detail'), 
 
     # Google Authentication
-    path('api/v1/auth/google/', GoogleLoginRedirectApi.as_view(), name='google_login'),
-    path('accounts/google/login/callback/', GoogleLoginCallbackApi.as_view(), name='google_login_callback'),
+    path('auth/google/login/', GoogleLoginRedirectApi.as_view(), name='google-login-redirect'),
+    path('auth/google/callback/', GoogleLoginCallbackApi.as_view(), name='google-login-callback'),
+    path('auth/google/redirect/', GoogleLoginRedirectApi.as_view(), name='google-auth-redirect'),
 
+
+    path('auth/', include('dj_rest_auth.urls')),  
+    path('auth/registration/', include('dj_rest_auth.registration.urls')),  
+    path('auth/google/', include('allauth.socialaccount.urls')),  
+
+    
     # News Feed
     path('newsfeed/', NewsFeedAPIView.as_view(), name='news-feed'),
 
